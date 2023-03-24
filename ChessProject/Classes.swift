@@ -29,16 +29,18 @@ class Piece: CustomStringConvertible , Equatable {
   }
   
   func move() -> Void {
-    
   }
   
   static func == (lhs: Piece, rhs: Piece) -> Bool {
     return lhs.value == rhs.value && lhs.isWhite == rhs.isWhite
   }
-  
 }
 
 class King: Piece {
+  override init(value: Int, isWhite: Bool) {
+    super.init(value: 1000, isWhite: isWhite)
+  }
+  
   override func move() {
     print("One square")
   }
@@ -49,6 +51,10 @@ class King: Piece {
 }
 
 class Queen: Piece {
+  override init(value: Int, isWhite: Bool) {
+    super.init(value: 9, isWhite: isWhite)
+  }
+  
   override func move() {
     print("Like bishop and rook")
   }
@@ -59,6 +65,10 @@ class Queen: Piece {
 }
 
 class Rook: Piece {
+  override init(value: Int, isWhite: Bool) {
+    super.init(value: 5, isWhite: isWhite)
+  }
+  
   override func move() {
     print("Horizontally or vertically")
   }
@@ -69,6 +79,10 @@ class Rook: Piece {
 }
 
 class Bishop: Piece {
+  override init(value: Int, isWhite: Bool) {
+    super.init(value: 3, isWhite: isWhite)
+  }
+  
   override func move() {
     print("Diagonally")
   }
@@ -79,6 +93,10 @@ class Bishop: Piece {
 }
 
 class Knight: Piece {
+  override init(value: Int, isWhite: Bool) {
+    super.init(value: 2, isWhite: isWhite)
+  }
+  
   override func move() {
     print("Like an L")
   }
@@ -89,24 +107,30 @@ class Knight: Piece {
 }
 
 class Pawn: Piece {
-  var promoted: Bool = false
+  var promoted: Bool = true
   var newPiece: Piece?
   
-  override init(value: Int, isWhite: Bool) {
-    super.init(value: value, isWhite: isWhite)
+  init (value: Int, isWhite: Bool , promoted: Bool , newPiece: Piece?) {
+    self.promoted = promoted
+    self.newPiece = newPiece
+    super.init(value: 1, isWhite: isWhite)
   }
   
-  func promote(_ newPiece: Piece) {
+  override func move() {
+    print("Forward 1 ")
+  }
+  
+  func promote(_ newPiece: Piece?) {
     self.promoted = true
     self.newPiece = newPiece
   }
   
   override var description: String {
-           if promoted == true {
-             return "Pawn (value = \(value)) , promoted = \(promoted), newPiece = \(newPiece?.description ?? "")"
-           } else {
-             return  "Pawn (value = \(value))"
-           }
+    if promoted == true {
+      return "Pawn (value = \(value)) , promoted = \(promoted), newPiece = \(newPiece?.description ?? "")"
+    } else {
+      return  "Pawn (value = \(value))"
+    }
   }
   
   static func == (lhs: Pawn, rhs: Pawn) -> Bool {
